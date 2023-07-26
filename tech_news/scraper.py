@@ -19,13 +19,14 @@ def fetch(url: str) -> str:
 def scrape_updates(html_content: str) -> list[str]:
     selector = Selector(html_content)
     urls = selector.css(".post-inner h2 a::attr(href)").getall()
-    return urls if urls else []
+    return urls
 
 
 # Requisito 3
-def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+def scrape_next_page_link(html_content: str) -> str:
+    selector = Selector(html_content)
+    link = selector.css("a.next.page-numbers::attr(href)").get()
+    return link
 
 
 # Requisito 4
@@ -38,3 +39,7 @@ def scrape_news(html_content):
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
     raise NotImplementedError
+
+
+html = fetch("https://blog.betrybe.com/")
+print(scrape_next_page_link(html))
